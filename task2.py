@@ -23,6 +23,10 @@ def fit_pca(X):
     Xc = X - mean
     cov = np.cov(Xc, rowvar=False)
     eigenvalues, eigenvectors = np.linalg.eigh(cov)
+    if np.allclose(eigenvalues.imag, 0):
+        eigenvalues = np.real(eigenvalues)
+    if np.allclose(eigenvectors.imag, 0):
+        eigenvectors = np.real(eigenvectors)
     order = np.argsort(eigenvalues)[::-1]
     eigenvalues = eigenvalues[order]
     eigenvectors = eigenvectors[:, order]
